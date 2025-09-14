@@ -1,0 +1,64 @@
+{	
+	"build": {
+		"common": [
+			[ "symlinkFile", "node_modules/codemirror", "htdocs/codemirror" ],
+			
+			[ "symlinkCompress", "node_modules/jquery/dist/jquery.min.js", "htdocs/js/external/" ],
+			[ "symlinkCompress", "node_modules/jquery/dist/jquery.min.map", "htdocs/js/external/" ],
+			
+			[ "symlinkCompress", "node_modules/@mdi/font/css/materialdesignicons.min.css", "htdocs/css/" ],
+			[ "symlinkCompress", "node_modules/@mdi/font/css/materialdesignicons.min.css.map", "htdocs/css/" ],
+			[ "symlinkCompress", "node_modules/@mdi/font/css/materialdesignicons.css.map", "htdocs/css/" ],
+			[ "copyFiles", "node_modules/@mdi/font/fonts/*", "htdocs/fonts/" ],
+			
+			[ "symlinkCompress", "node_modules/unscroll/unscroll.min.js", "htdocs/js/external/" ],
+			[ "symlinkCompress", "node_modules/marked/marked.min.js", "htdocs/js/external/" ],
+			
+			[ "symlinkFile", "node_modules/orchestra-theme/js", "htdocs/js/common" ],
+			[ "symlinkFile", "node_modules/orchestra-theme/css/normalize.css", "htdocs/css/" ],
+			[ "symlinkFile", "node_modules/orchestra-theme/css/base.css", "htdocs/css/" ],
+			
+			[ "chmodFiles", "755", "bin/*" ],
+			
+			[ "prepIconFont", "htdocs/js/external/icon-font-names.js" ],
+			[ "compressFile", "htdocs/js/external/icon-font-names.js", "htdocs/js/external/icon-font-names.js.gz" ]
+		],
+		"dev": [
+			[ "deleteFiles", "htdocs/css/_combo*" ],
+			[ "deleteFiles", "htdocs/js/_combo*" ],
+			[ "deleteFile", "htdocs/index.html" ],
+			[ "deleteFile", "htdocs/index.html.gz" ],
+			[ "symlinkFile", "htdocs/index-dev.html", "htdocs/index.html" ],
+			[ "symlinkFile", "sample_conf", "conf" ]
+		],
+		"dist": [
+			[ "copyDir", "sample_conf", "conf", { "exclusive": true } ],
+			{
+				"action": "bundleCompress",
+				"strip_source_maps": true,
+				"dest_bundle": "htdocs/css/_combo.css",
+				"src_html_file": "htdocs/index-dev.html",
+				"dest_html_file": "htdocs/index.html",
+				"match_key": "COMBINE_STYLE",
+				"dest_bundle_tag": "<link rel=\"stylesheet\" href=\"css/_combo.css?v=[version]\">"
+			},
+			{
+				"action": "bundleCompress",
+				"uglify": false,
+				"header": "/* Copyright (c) PixlCore.com. */",
+				"dest_bundle": "htdocs/js/_combo.js",
+				"src_html_file": "htdocs/index.html",
+				"dest_html_file": "htdocs/index.html",
+				"match_key": "COMBINE_SCRIPT",
+				"dest_bundle_tag": "<script src=\"js/_combo.js?v=[version]\"></script>"
+			},
+			{
+				"action": "printMessage",
+				"lines": [
+					"Welcome to PixlCore!",
+					"Enjoy!"
+				]
+			}
+		]
+	}
+}

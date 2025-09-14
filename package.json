@@ -1,0 +1,38 @@
+{
+	"name": "pixlcore.com",
+	"version": "1.0.0",
+	"description": "The PixlCore.com website.",
+	"author": "Joseph Huckaby <jhuckaby@pixlcore.com>",
+	"homepage": "https://github.com/pixlcore/pixlcore.com",
+	"license": "Private",
+	"main": "lib/main.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pixlcore/pixlcore.com"
+	},
+	"bugs": {
+		"url": "https://github.com/pixlcore/pixlcore.com/issues"
+	},
+	"keywords": [
+		"pixlcore",
+		"webapp"
+	],
+	"dependencies": {
+		"@mdi/font": "7.4.47",
+		"@mdi/svg": "7.4.47",
+		"async": "2.6.4",
+		"class-plus": "^2.0.0",
+		"jquery": "3.6.0",
+		"marked": "2.0.3",
+		"mime": "2.5.2",
+		"codemirror": "5.58.3",
+		"orchestra-theme": "^2.0.0",
+		"pixl-cache": "^1.0.6",
+		"pixl-cli": "^1.0.11",
+		"pixl-request": "^2.0.3",
+		"pixl-tools": "^1.0.24",
+		"pixl-xml": "^1.0.13",
+		"uglify-js": "3.13.5",
+		"unscroll": "1.0.7"
+	}
+}

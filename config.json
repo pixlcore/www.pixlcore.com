@@ -1,0 +1,217 @@
+{
+	"name": "PixlCore.com",
+	"pool": "default",
+	"acl": false,
+	"headers": {
+		"host": "^(www\\.|local\\.)?(pixlcore\\.com)(\\:\\d+)?$"
+	},
+	"routes": [
+		{
+			"type": "static",
+			"uri_match": "^/\\.well\\-known",
+			"path": "/opt/mendo/htdocs/.well-known"
+		},
+		{
+			"type": "proxy",
+			"uri_match": "^/(archives|bugs|canvas-plus|demos|public|screenshots|software|temp|uploads)/",
+			"target_hostname": "s3.us-west-1.amazonaws.com",
+			"target_port": 80,
+			"preserve_host": false,
+			"path_prefix": "/pixlcore.com",
+			"use_keep_alives": true,
+			"dir_index": "index.html",
+			"insert_response_headers": {
+				"Cache-Control": "public, max-age=86400"
+			}
+		},
+		{
+			"type": "script",
+			"uri_match": "^/(blog/|view/|doc/|about/|feed\\.rss|index\\.html|$)",
+			"path": "lib/api.js",
+			"max_requests_per_sec": 1000,
+			"max_concurrent_requests": 100
+		},
+		{
+			"type": "static",
+			"uri_match": "^/",
+			"path": "htdocs"
+		}
+	],
+	
+	"authors": {
+		"jhuckaby": {
+			"name": "Joseph Huckaby",
+			"link": "https://mastodon.social/@jhuckaby",
+			"avatar": "/images/users/jhuckaby.png"
+		}
+	},
+	
+	"articles": [
+		"curves",
+		"net-proc-watch"
+	],
+	
+	"pages": {
+		"home": { "title": "Home", "icon": "home", "page": "home" },
+		"about": { "title": "About PixlCore", "icon": "information-outline", "org": "pixlcore", "branch": "main", "repo": "blog", "file": "about-pixlcore.md", "page": "special" },
+		
+		"cronicle": { "title": "Cronicle", "icon": "progress-clock", "org": "jhuckaby", "branch": "master", "repo": "cronicle" },
+		"orchestra": { "title": "Orchestra", "icon": "_orchestra", "org": "pixlcore", "branch": "main", "repo": "blog", "file": "orchestra-coming-soon.md" },
+		"performa": { "title": "Performa", "icon": "chart-areaspline", "org": "jhuckaby", "branch": "master", "repo": "performa" },
+		
+		"canvas-plus": { "title": "CanvasPlus", "icon": "palette-outline", "org": "jhuckaby", "branch": "master", "repo": "canvas-plus" },
+		"confsync": { "title": "ConfSync", "icon": "sync", "org": "jhuckaby", "branch": "main", "repo": "confsync" },
+		"logalert": { "title": "LogAlert", "icon": "folder-alert-outline", "org": "jhuckaby", "branch": "master", "repo": "logalert" },
+		"wperf": { "title": "WebPerf", "icon": "clock-fast", "org": "jhuckaby", "branch": "master", "repo": "wperf" },
+		
+		"poolnoodle": { "title": "PoolNoodle", "icon": "adjust", "org": "jhuckaby", "branch": "master", "repo": "poolnoodle" },
+		"megacache": { "title": "MegaCache", "icon": "chip", "org": "jhuckaby", "branch": "main", "repo": "megacache" },
+		"megahash": { "title": "MegaHash", "icon": "memory", "org": "jhuckaby", "branch": "master", "repo": "megahash" },
+		
+		"clipdown": { "title": "ClipDown", "icon": "clipboard-arrow-down-outline", "org": "jhuckaby", "branch": "master", "repo": "clipdown" },
+		"folderctl": { "title": "FolderControl", "icon": "folder-arrow-left-right-outline", "org": "jhuckaby", "branch": "master", "repo": "folderctl" },
+		"memslap": { "title": "MemSlap", "icon": "hand-back-right-outline", "org": "jhuckaby", "branch": "master", "repo": "memslap" },
+		"syntax-clip": { "title": "SyntaxClip", "icon": "clipboard-text-outline", "org": "jhuckaby", "branch": "master", "repo": "syntax-clip" },
+		
+		"pixl-acl": { "org": "jhuckaby", "branch": "master", "repo": "pixl-acl", "icon": "lan" },
+		"pixl-args": { "org": "jhuckaby", "branch": "master", "repo": "pixl-args", "icon": "text-box-search-outline" },
+		"pixl-boot": { "org": "jhuckaby", "branch": "master", "repo": "pixl-boot", "icon": "desktop-classic" },
+		"pixl-cache": { "org": "jhuckaby", "branch": "master", "repo": "pixl-cache", "icon": "memory-arrow-down" },
+		"pixl-chart": { "org": "jhuckaby", "branch": "main", "repo": "pixl-chart", "icon": "chart-timeline-variant" },
+		"pixl-cli": { "org": "jhuckaby", "branch": "master", "repo": "pixl-cli", "icon": "console" },
+		"pixl-config": { "org": "jhuckaby", "branch": "master", "repo": "pixl-config", "icon": "code-json" },
+		"pixl-json-stream": { "org": "jhuckaby", "branch": "master", "repo": "pixl-json-stream", "icon": "cable-data" },
+		"pixl-logger": { "org": "jhuckaby", "branch": "master", "repo": "pixl-logger", "icon": "invoice-text-edit-outline" },
+		"pixl-mail": { "org": "jhuckaby", "branch": "master", "repo": "pixl-mail", "icon": "email-outline" },
+		"pixl-pack": { "org": "jhuckaby", "branch": "master", "repo": "pixl-pack", "icon": "package-variant" },
+		"pixl-perf": { "org": "jhuckaby", "branch": "master", "repo": "pixl-perf", "icon": "speedometer" },
+		"pixl-request": { "org": "jhuckaby", "branch": "master", "repo": "pixl-request", "icon": "upload-network-outline" },
+		"pixl-server": { "org": "jhuckaby", "branch": "master", "repo": "pixl-server", "icon": "server-network-outline" },
+		"pixl-server-api": { "org": "jhuckaby", "branch": "master", "repo": "pixl-server-api", "icon": "router" },
+		"pixl-server-debug": { "org": "jhuckaby", "branch": "master", "repo": "pixl-server-debug", "icon": "bug-outline" },
+		"pixl-server-pool": { "org": "jhuckaby", "branch": "master", "repo": "pixl-server-pool", "icon": "pool" },
+		"pixl-server-storage": { "org": "jhuckaby", "branch": "master", "repo": "pixl-server-storage", "icon": "harddisk" },
+		"pixl-server-unbase": { "org": "jhuckaby", "branch": "master", "repo": "pixl-server-unbase", "icon": "database-outline" },
+		"pixl-server-user": { "org": "jhuckaby", "branch": "master", "repo": "pixl-server-user", "icon": "account-multiple" },
+		"pixl-server-web": { "org": "jhuckaby", "branch": "master", "repo": "pixl-server-web", "icon": "wan" },
+		"pixl-tools": { "org": "jhuckaby", "branch": "master", "repo": "pixl-tools", "icon": "hammer-wrench" },
+		"pixl-unit": { "org": "jhuckaby", "branch": "master", "repo": "pixl-unit", "icon": "test-tube" },
+		"pixl-xml": { "org": "jhuckaby", "branch": "master", "repo": "pixl-xml", "icon": "xml" },
+		"s3-api": { "org": "jhuckaby", "branch": "main", "repo": "s3-api", "icon": "aws" },
+		"webp-wasm": { "org": "jhuckaby", "branch": "main", "repo": "webp-wasm", "icon": "image-outline" },
+		"zeroupload": { "org": "jhuckaby", "branch": "master", "repo": "zeroupload", "icon": "cloud-upload-outline" },
+		
+		"canvascycle": { "title": "CanvasCycle", "icon": "brush", "org": "jhuckaby", "branch": "master", "repo": "canvascycle" },
+		"effectgames": { "title": "EffectGames", "icon": "gamepad-variant-outline", "org": "jhuckaby", "branch": "master", "repo": "effectgames" },
+		"openbox": { "title": "OpenBox", "icon": "gift-open-outline", "org": "jhuckaby", "branch": "master", "repo": "openbox" }
+	},
+	
+	"sidebar": [
+		{
+			"id": "main",
+			"title": "Main",
+			"icon": "earth",
+			"items": [
+				{ "id": "home", "title": "Home", "icon": "home", "loc": "/" },
+				{ "id": "about", "title": "About", "icon": "information-outline", "loc": "/view/about/" },
+				{ "id": "blog", "title": "Blog", "icon": "script-text-outline", "loc": "/blog/" }
+			]
+		},
+		{
+			"id": "products",
+			"title": "Products",
+			"icon": "book-multiple-outline",
+			"items": [
+				"cronicle",
+				"orchestra",
+				"performa"
+			]
+		},
+		{
+			"id": "tools",
+			"title": "Tools",
+			"icon": "toolbox",
+			"items": [
+				"canvas-plus",
+				"confsync",
+				"logalert",
+				"wperf"
+			]
+		},
+		{
+			"id": "projects",
+			"title": "Projects",
+			"icon": "palette-swatch-variant",
+			"items": [
+				"poolnoodle",
+				"megacache",
+				"megahash"
+			]
+		},
+		{
+			"id": "macos",
+			"title": "macOS",
+			"icon": "apple-finder",
+			"items": [
+				"clipdown",
+				"folderctl",
+				"memslap",
+				"syntax-clip"
+			]
+		},
+		{
+			"id": "libraries",
+			"title": "Libraries",
+			"icon": "source-repository-multiple",
+			"default_icon": "source-branch",
+			"items": [
+				"pixl-acl",
+				"pixl-args",
+				"pixl-boot",
+				"pixl-cache",
+				"pixl-chart",
+				"pixl-cli",
+				"pixl-config",
+				"pixl-json-stream",
+				"pixl-logger",
+				"pixl-mail",
+				"pixl-pack",
+				"pixl-perf",
+				"pixl-request",
+				"pixl-tools",
+				"pixl-unit",
+				"pixl-xml",
+				"s3-api",
+				"webp-wasm",
+				"zeroupload"
+			]
+		},
+		{
+			"id": "server",
+			"title": "Server",
+			"icon": "server-network",
+			"default_icon": "source-branch",
+			"items": [
+				"pixl-server",
+				"pixl-server-api",
+				"pixl-server-debug",
+				"pixl-server-pool",
+				"pixl-server-storage",
+				"pixl-server-unbase",
+				"pixl-server-user",
+				"pixl-server-web"
+			]
+		},
+		{
+			"id": "archives",
+			"title": "Archives",
+			"icon": "file-cabinet",
+			"items": [
+				"canvascycle",
+				"effectgames",
+				"openbox"
+			]
+		}
+	]
+	
+}

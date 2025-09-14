@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>PixlCore.com</title>
+	<meta name="description" content="A complete task scheduler and server monitoring system.">
+	<meta name="author" content="Joseph Huckaby / PixlCore">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+	<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#3791F5">
+	<link rel="me" href="https://mastodon.social/@pixlcore">
+	<meta name="theme-color" content="#3791F5">
+	
+	<!-- BUILD: COMBINE_STYLE_START -->
+	<link rel="stylesheet" href="/css/normalize.css">
+	<link rel="stylesheet" href="/css/base.css">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/search.css">
+	<link rel="stylesheet" href="/css/materialdesignicons.min.css">
+	<link rel="stylesheet" href="/codemirror/lib/codemirror.css">
+	<link rel="stylesheet" href="/codemirror/theme/shadowfox.css">
+	<!-- BUILD: COMBINE_STYLE_END -->
+</head>
+
+<body>
+	<!-- This is for the floating fixed message notification system -->
+	<div id="d_message" class="message" style="display:none" onMouseUp="app.hideMessage(250)">
+		<div id="d_message_inner" class="message_inner"></div>
+	</div>
+	
+	<div class="sidebar">
+		<div class="title"></div>
+		
+		<div id="d_dynamic_sidebar"></div>
+		
+		<div class="sidebar_foot_pad"></div>
+	</div>
+	
+	<div class="header">
+		<div id="d_logo_overlay" onClick="location.href='/';"></div>
+		<div id="d_sidebar_toggle"><i class="mdi mdi-menu-open"></i></div>
+		<div id="d_header_user_container" class="right">
+			
+		</div>
+		<div class="header_title"></div>
+		<div class="clear"></div>
+	</div>
+	
+	<div class="main">
+		<div class="page"></div>
+	</div>
+	
+	<!-- Footer -->
+	<div id="d_footer">
+		<div class="left">
+			&copy; 2025 PixlCore LLC, registered via Stripe Atlas.
+		</div>
+		<div id="d_footer_version" class="right">Version 2.0</div>
+		<div class="clear"></div>
+	</div>
+	
+	<script src="/js/external/jquery.min.js"></script>
+	
+	<!-- BUILD: COMBINE_SCRIPT_START -->
+	<script src="/codemirror/lib/codemirror.js"></script>
+	<script src="/codemirror/addon/mode/overlay.js"></script>
+	<script src="/codemirror/addon/runmode/runmode.js"></script>
+	<script src="/codemirror/mode/xml/xml.js"></script>
+	<script src="/codemirror/mode/markdown/markdown.js"></script>
+	<script src="/codemirror/mode/gfm/gfm.js"></script>
+	<script src="/codemirror/mode/javascript/javascript.js"></script>
+	<script src="/codemirror/mode/css/css.js"></script>
+	<script src="/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+	<script src="/codemirror/mode/clike/clike.js"></script>
+	<script src="/codemirror/mode/meta.js"></script>
+	<script src="/codemirror/mode/shell/shell.js"></script>
+	<script src="/codemirror/mode/sql/sql.js"></script>
+	<script src="/codemirror/mode/php/php.js"></script>
+	<script src="/codemirror/mode/perl/perl.js"></script>
+	<script src="/codemirror/mode/python/python.js"></script>
+	
+	<script src="/js/external/unscroll.min.js"></script>
+	<script src="/js/common/misc.js"></script>
+	<script src="/js/common/tools.js"></script>
+	<script src="/js/common/datetime.js"></script>
+	<script src="/js/common/page.js"></script>
+	<script src="/js/common/dialog.js"></script>
+	<script src="/js/common/popover.js"></script>
+	<script src="/js/common/select.js"></script>
+	<script src="/js/common/base.js"></script>
+	<script src="/js/app.js"></script>
+	<!-- BUILD: COMBINE_SCRIPT_END -->
+	
+	<script>
+		app.receiveConfig( <!-- DATA --> );
+	</script>
+	
+	<div style="display:none">
+		<a rel="me" href="https://mastodon.social/@jhuckaby">Mastodon</a>
+		<a rel="me" href="https://mastodon.social/@pixlcore">Mastodon</a>
+	</div>
+	
+</body>
+</html>
