@@ -19,6 +19,7 @@
 	<link rel="stylesheet" href="/css/normalize.css">
 	<link rel="stylesheet" href="/css/base.css">
 	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/accessibility.css">
 	<link rel="stylesheet" href="/css/search.css">
 	<link rel="stylesheet" href="/css/materialdesignicons.min.css">
 	<link rel="stylesheet" href="/codemirror/lib/codemirror.css">
@@ -27,6 +28,8 @@
 </head>
 
 <body>
+	<div id="filter_overlay" aria-hidden="true"></div>
+	
 	<!-- This is for the floating fixed message notification system -->
 	<div id="d_message" class="message" style="display:none" onMouseUp="app.hideMessage(250)">
 		<div id="d_message_inner" class="message_inner"></div>
@@ -83,7 +86,7 @@
 	<script src="/codemirror/mode/perl/perl.js"></script>
 	<script src="/codemirror/mode/python/python.js"></script>
 	
-	<script src="/js/external/unscroll.min.js"></script>
+	<script src="/js/common/unscroll.min.js"></script>
 	<script src="/js/common/misc.js"></script>
 	<script src="/js/common/tools.js"></script>
 	<script src="/js/common/datetime.js"></script>
