@@ -11,12 +11,11 @@
 			[ "symlinkCompress", "node_modules/@mdi/font/css/materialdesignicons.css.map", "htdocs/css/" ],
 			[ "copyFiles", "node_modules/@mdi/font/fonts/*", "htdocs/fonts/" ],
 			
-			[ "symlinkCompress", "node_modules/unscroll/unscroll.min.js", "htdocs/js/external/" ],
 			[ "symlinkCompress", "node_modules/marked/marked.min.js", "htdocs/js/external/" ],
 			
-			[ "symlinkFile", "node_modules/orchestra-theme/js", "htdocs/js/common" ],
-			[ "symlinkFile", "node_modules/orchestra-theme/css/normalize.css", "htdocs/css/" ],
-			[ "symlinkFile", "node_modules/orchestra-theme/css/base.css", "htdocs/css/" ],
+			[ "symlinkFile", "node_modules/pixl-xyapp/js", "htdocs/js/common" ],
+			[ "symlinkFile", "node_modules/pixl-xyapp/css/normalize.css", "htdocs/css/" ],
+			[ "symlinkFile", "node_modules/pixl-xyapp/css/base.css", "htdocs/css/" ],
 			
 			[ "chmodFiles", "755", "bin/*" ],
 			
