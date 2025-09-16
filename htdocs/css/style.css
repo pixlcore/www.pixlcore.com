@@ -39,16 +39,8 @@ body.relative div.header > div.header_title {
 }
 
 div.box_content {
-	padding-left: 90px;
-	padding-right: 90px;
-}
-
-div.box_title {
-	/* color: var(--green); */
-	
-	/* white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis; */
+	padding-left: 180px;
+	padding-right: 180px;
 }
 
 .box_title .button {
@@ -270,7 +262,7 @@ i.mdi.mdi-_orchestra {
 .markdown-body h5,
 .markdown-body h6 {
 	position: relative;
-	margin-top: 0px;
+	margin-top: 40px;
 	margin-bottom: 16px;
 	font-weight: 600;
 	line-height: 1.25;
@@ -350,7 +342,7 @@ i.mdi.mdi-_orchestra {
 }
 
 .markdown-body table tr td {
-	padding: 5px 15px 5px 3px;
+	padding: 10px 15px 10px 3px;
 	border-bottom: 1px solid var(--border-color);
 }
 
@@ -462,6 +454,7 @@ i.mdi.mdi-_orchestra {
 
 .markdown-body p > a, .markdown-body li > a {
 	font-weight: 600;
+	color: var(--theme-color);
 }
 
 .markdown-body strong {
@@ -497,6 +490,37 @@ i.mdi.mdi-_orchestra {
 	text-align: right;
 }
 
+.markdown-body .blocknote {
+	border-left: 3px solid var(--active-color);
+	margin-left: 0;
+	margin-bottom: 16px;
+	padding-left: 30px;
+	line-height: 1.5;
+}
+.markdown-body .blocknote .bn_title {
+	color: var(--active-color);
+	font-weight: bold;
+}
+.markdown-body .blocknote .bn_content {
+	font-style: italic;
+	color: var(--label-color);
+}
+.markdown-body .blocknote.note {
+	--active-color: var(--blue);
+}
+.markdown-body .blocknote.tip {
+	--active-color: var(--green);
+}
+.markdown-body .blocknote.important {
+	--active-color: var(--red);
+}
+.markdown-body .blocknote.warning {
+	--active-color: var(--yellow);
+}
+.markdown-body .blocknote.caution {
+	--active-color: var(--purple);
+}
+
 /* CodeMirror */
 
 .cm-s-default span.cm-tag { font-weight:normal; }
@@ -513,8 +537,8 @@ i.mdi.mdi-_orchestra {
 	font-size: 24px;
 	text-transform: none;
 	padding-top: 30px !important;
-	padding-left: 90px !important;
-	padding-right: 90px !important;
+	padding-left: 180px !important;
+	padding-right: 180px !important;
 	padding-bottom: 0px !important;
 }
 
@@ -764,9 +788,29 @@ div.td_big {
 
 @media only screen and (min-width: 1451px) and (max-width: 1600px) {
 	
+	div.box_content {
+		padding-left: 120px;
+		padding-right: 120px;
+	}
+	
+	.box_title.blog {
+		padding-left: 120px !important;
+		padding-right: 120px !important;
+	}
+	
 }
 
 @media only screen and (min-width: 1281px) and (max-width: 1450px) {
+	
+	div.box_content {
+		padding-left: 90px;
+		padding-right: 90px;
+	}
+	
+	.box_title.blog {
+		padding-left: 90px !important;
+		padding-right: 90px !important;
+	}
 	
 }
 
@@ -789,13 +833,13 @@ div.td_big {
 	}
 	
 	div.box_content {
-		padding-left: 30px;
-		padding-right: 30px;
+		padding-left: 60px;
+		padding-right: 60px;
 	}
 	
 	.box_title.blog {
-		padding-left: 30px !important;
-		padding-right: 30px !important;
+		padding-left: 60px !important;
+		padding-right: 60px !important;
 	}
 }
 
