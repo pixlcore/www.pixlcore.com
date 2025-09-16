@@ -44,6 +44,10 @@ app.extend({
 		// setup theme (light / dark)
 		this.initTheme();
 		
+		// accessibility
+		this.initAccessibility();
+		this.updateAccessibility();
+		
 		// header
 		this.updateHeaderInfo();
 		
@@ -627,6 +631,7 @@ app.extend({
 		
 		html += '<div id="d_rss_btn" class="header_widget icon" onClick="app.copyRSSFeed()" title="Copy Blog RSS Link"><i class="mdi mdi-rss"></i></div>'; 
 		html += '<div id="d_theme_ctrl" class="header_widget icon" onClick="app.openThemeSelector()" title="Select Theme"></div>';
+		html += '<div id="d_color_ctrl" class="header_widget icon" onClick="app.openFilterControls()" title="Visual Preferences"><i class="mdi mdi-palette"></i></div>';
 		html += '<div id="d_sidebar_ctrl" class="header_widget icon mobile_hide" onClick="app.toggleSidebar()" title="Toggle Sidebar"></div>';
 		
 		// html += '<div id="d_header_clock" class="header_clock"></div>';
@@ -655,12 +660,12 @@ app.extend({
 		
 		if (enabled) {
 			$body.removeClass('relative').addClass('sidebar');
-			$('#d_sidebar_ctrl').html('<i class="mdi mdi-eye-outline"></i>');
+			$('#d_sidebar_ctrl').html('<i class="mdi mdi-menu-open"></i>');
 			this.setPref('focus', false);
 		}
 		else {
 			$body.removeClass('sidebar').addClass('relative');
-			$('#d_sidebar_ctrl').html('<i class="mdi mdi-eye-off-outline"></i>');
+			$('#d_sidebar_ctrl').html('<i class="mdi mdi-menu-close"></i>');
 			this.setPref('focus', true);
 		}
 	},
@@ -675,6 +680,172 @@ app.extend({
 		else {
 			this.setSidebarVisibility(true);
 		}
+	},
+	
+	initAccessibility() {
+		// initialize accessibility subsystem
+		var rmQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+		this.sysReducedMotion = rmQuery.matches;
+		
+		rmQuery.addEventListener('change', function(event) {
+			app.sysReducedMotion = event.matches;
+			app.updateAccessibility();
+		});
+		
+		// we need multiple queries for contrast
+		var conHighQuery = window.matchMedia('(prefers-contrast: high)');
+		var conLowQuery = window.matchMedia('(prefers-contrast: low)');
+		this.sysContrast = (conHighQuery.matches ? 'high' : (conLowQuery.matches ? 'low' : 'normal'));
+		
+		var handleContrastChange = function() {
+			app.sysContrast = (conHighQuery.matches ? 'high' : (conLowQuery.matches ? 'low' : 'normal'));
+			app.updateAccessibility();
+		};
+		
+		conHighQuery.addEventListener('change', handleContrastChange);
+		conLowQuery.addEventListener('change', handleContrastChange);
+		
+		// init filters to defaults
+		if (!this.getPref('filters')) {
+			this.setPref('filters', { brightness: 100, contrast: 100, hue: 0, saturation: 100, sepia: 0, grayscale: 0, invert: 0 });
+		}
+	},
+	
+	updateAccessibility() {
+		// update accessibility settings, after user login, user settings change or CSS event
+		var $body = $('body');
+		
+		// motion setting
+		if (this.reducedMotion()) $body.addClass('reduced'); else $body.removeClass('reduced');
+		
+		// contrast setting
+		$body.removeClass(['highcon', 'lowcon']);
+		var con = this.userContrast();
+		if (con == 'high') $body.addClass('highcon');
+		else if (con == 'low') $body.addClass('lowcon');
+		
+		// color accessibilty
+		if (this.getPref('color_acc')) $body.addClass('coloracc'); else $body.removeClass('coloracc');
+		
+		// apply user filters
+		this.applyUserFilters();
+	},
+	
+	applyUserFilters() {
+		// filters go
+		var filters = this.getPref('filters');
+		if (!filters) return; // sanity
+		
+		if ((filters.brightness != 100) || (filters.contrast != 100) || (filters.hue != 0) || (filters.saturation != 100) || (filters.sepia != 0) || (filters.grayscale != 0) || (filters.invert != 0)) {
+			var filts = [];
+			if (filters.brightness != 100) filts.push(`brightness(${filters.brightness}%)`);
+			if (filters.contrast != 100) filts.push(`contrast(${filters.contrast}%)`);
+			if (filters.hue != 0) filts.push(`hue-rotate(${filters.hue}deg)`);
+			if (filters.saturation != 100) filts.push(`saturate(${filters.saturation}%)`);
+			if (filters.sepia != 0) filts.push(`sepia(${filters.sepia}%)`);
+			if (filters.grayscale != 0) filts.push(`grayscale(${filters.grayscale}%)`);
+			if (filters.invert != 0) filts.push(`invert(${filters.invert}%)`);
+			$('#filter_overlay').css('backdropFilter', filts.join(' ')).show();
+		}
+		else {
+			$('#filter_overlay').css('backdropFilter', 'none').hide();
+		}
+	},
+	
+	reducedMotion() {
+		// return true if user prefers reduced motion, false otherwise
+		if (this.getPref('motion') == 'full') return false;
+		else if (this.getPref('motion') == 'reduced') return true;
+		else return this.sysReducedMotion;
+	},
+	
+	userContrast() {
+		// return user contrast preference
+		if (this.getPref('contrast') == 'high') return 'high';
+		else if (this.getPref('contrast') == 'normal') return 'normal';
+		else if (this.getPref('contrast') == 'low') return 'low';
+		else return this.sysContrast;
+	},
+	
+	openFilterControls(elem) {
+		// allow user to adjust colors
+		var $elem = $(elem || '#d_color_ctrl');
+		$elem.data('popover-z-index', 20001);
+		$elem.data('popover-hide-overlay', true);
+		
+		var html = '';
+		html += '<div class="sel_dialog_label">Visual Preferences</div>';
+		html += '<div id="d_sel_dialog_scrollarea" class="sel_dialog_scrollarea" style="max-height:80vh;">';
+		
+		// brightness
+		html += '<div class="info_label" style="margin-top:15px">Brightness</div>';
+		html += '<div class="info_value"><input type="range" id="fe_fctrl_brightness" min="25" max="200" value="100" style="width:200px"></div>';
+		
+		// contrast
+		html += '<div class="info_label">Contrast</div>';
+		html += '<div class="info_value"><input type="range" id="fe_fctrl_contrast" min="25" max="200" value="100" style="width:200px"></div>';
+		
+		// hue
+		html += '<div class="info_label">Hue</div>';
+		html += '<div class="info_value"><input type="range" id="fe_fctrl_hue" min="-180" max="180" value="0" style="width:200px"></div>';
+		
+		// saturation
+		html += '<div class="info_label">Saturation</div>';
+		html += '<div class="info_value"><input type="range" id="fe_fctrl_saturation" min="0" max="200" value="100" style="width:200px"></div>';
+		
+		// sepia
+		html += '<div class="info_label">Sepia</div>';
+		html += '<div class="info_value"><input type="range" id="fe_fctrl_sepia" min="0" max="100" value="0" style="width:200px"></div>';
+		
+		// grayscale
+		html += '<div class="info_label">Grayscale</div>';
+		html += '<div class="info_value"><input type="range" id="fe_fctrl_grayscale" min="0" max="100" value="0" style="width:200px"></div>';
+		
+		// invert
+		html += '<div class="info_label">Invert</div>';
+		html += '<div class="info_value"><input type="range" id="fe_fctrl_invert" min="0" max="100" value="0" style="width:200px"></div>';
+		
+		// reset button
+		html += '<div class="sel_dialog_button_container">';
+			html += '<div class="button primary" id="btn_sel_dialog_reset">Reset</div>';
+		html += '</div>';
+		
+		html += '</div>';
+		Popover.attach( $elem, '<div style="padding:15px;">' + html + '</div>', true );
+		
+		// wire up controls
+		var filters = this.getPref('filters');
+		
+		Object.keys(filters).forEach(key => {
+			const el = document.getElementById('fe_fctrl_' + key);
+			el.value = filters[key];
+			
+			el.addEventListener('input', () => {
+				filters[key] = el.valueAsNumber;
+				app.applyUserFilters();
+			});
+			el.addEventListener('change', () => {
+				app.savePrefs();
+			});
+		});
+		
+		const resetBtn = document.getElementById('btn_sel_dialog_reset');
+		resetBtn.addEventListener('click', () => {
+			filters.brightness = 100;
+			filters.contrast = 100;
+			filters.hue = 0;
+			filters.saturation = 100;
+			filters.sepia = 0;
+			filters.grayscale = 0;
+			filters.invert = 0;
+			
+			app.applyUserFilters();
+			app.savePrefs();
+			
+			Object.keys(filters).forEach(key => {
+				document.getElementById('fe_fctrl_' + key).value = filters[key];
+			});
+		});
 	},
 	
 	openThemeSelector: function() {
@@ -819,6 +990,11 @@ app.extend({
 			if (page && page.onScrollDelay) page.onScrollDelay();
 			if (page && page.updateBoxButtonFloaterState) page.updateBoxButtonFloaterState();
 		}
+	},
+	
+	onKeyDown: function(event) {
+		// capture keydown if not focused in text field
+		// if (event.key === "Escape") app.openFilterControls();
 	},
 	
 	setupMouseEvents() {
