@@ -158,20 +158,24 @@ class Curve {
 	/** 
 	 * Apply solarize effect using 'v' curve.
 	 * @param {Object} opts - Options for filter.
+	 * @param {number} opts.amount - Solarize adjustment value.
 	 * @param {string} [opts.channels=rgb] - Which channels to apply filter to.
 	 * @returns {this} - The curve instance, for chaining calls.
 	 */
 	solarize(opts = {}) {
-		// apply solarize effect using 'v' curve
-		// opts: { channels }
+		// apply solarize effect using '^' curve
+		// opts: { amount, channels }
 		let curve = [];
 		
 		this.validate(opts, {
+			amount: { type: 'number', min: 0, max: 100, required: true },
 			channels: { type: 'string', match: /^r?g?b?a?$/i, required: false }
 		});
 		
+		let amount = opts.amount / 100;
+		
 		for (let idx = 0; idx < 256; idx++) {
-			curve.push( (idx < 128) ? idx : (255 - idx) );
+			curve.push( (idx < 128) ? idx : Math.floor( idx + (((255 - idx) - idx) * amount) ) );
 		}
 		
 		let channels = opts.channels || 'rgb';
@@ -191,20 +195,24 @@ class Curve {
 	/** 
 	 * Invert channels using curve.
 	 * @param {Object} opts - Options for filter.
+	 * @param {number} opts.amount - Invert adjustment value.
 	 * @param {string} [opts.channels=rgb] - Which channels to apply filter to.
 	 * @returns {this} - The curve instance, for chaining calls.
 	 */
 	invert(opts = {}) {
 		// invert channels using curve
-		// opts: { channels }
+		// opts: { amount, channels }
 		let curve = [];
 		
 		this.validate(opts, {
+			amount: { type: 'number', min: 0, max: 100, required: true },
 			channels: { type: 'string', match: /^r?g?b?a?$/i, required: false }
 		});
 		
+		let amount = opts.amount / 100;
+		
 		for (let idx = 0; idx < 256; idx++) {
-			curve.push( 255 - idx );
+			curve.push( Math.floor( idx + (((255 - idx) - idx) * amount) ) );
 		}
 		
 		let channels = opts.channels || 'rgb';
@@ -236,16 +244,14 @@ class Curve {
 			amount: { type: 'number', min: -255, max: 255, required: false }
 		});
 		
-		let curve = [];
+		let curve = [0, 127, 255];
 		let channel = '';
 		let amount = 0;
 		
 		if (opts.amount > 0) { channel = 'red'; amount = Math.floor(opts.amount / 4); }
 		else { channel = 'blue'; amount = 0 - Math.floor(opts.amount / 4); }
 		
-		for (let idx = 0; idx < 256; idx++) {
-			curve.push( Math.min(255, idx + amount) );
-		}
+		curve[1] = Math.min(255, Math.max(0, curve[1] + amount));
 		
 		delete opts.amount;
 		opts[channel] = curve;
@@ -294,13 +300,23 @@ class Curve {
 	
 	/** 
 	 * Generate sepia tone using curves (image should be pre-desaturated).
+	 * @param {(Object|number)} opts - Options for filter or sepia amount.
+	 * @param {number} opts.amount - Sepia adjustment value.
 	 * @returns {this} - The curve instance, for chaining calls.
 	 */
 	sepia(opts = {}) {
 		// generate sepia tone using curves
+		// opts: { amount }
+		if (typeof(opts) == 'number') opts = { amount: opts };
 		
-		opts.green = [0, 108, 255];
-		opts.blue = [0, 64, 255];
+		this.validate(opts, {
+			amount: { type: 'number', min: 0, max: 100, required: true }
+		});
+		
+		let amount = opts.amount / 100;
+		
+		opts.green = [0, Math.floor(127 - (amount * 19)), 255];
+		opts.blue = [0, Math.floor(127 - (amount * 63)), 255];
 		
 		return this.apply(opts);
 	}
@@ -308,6 +324,7 @@ class Curve {
 	/** 
 	 * Normalize (stretch) contrast to expand full range.
 	 * @param {Object} opts - Options for filter.
+	 * @param {number} opts.amount - Normalize adjustment value.
 	 * @param {string} [opts.channels=rgb] - Which channels to apply filter to.
 	 * @returns {this} - The curve instance, for chaining calls.
 	 */
@@ -317,6 +334,7 @@ class Curve {
 		let histo = this.histogram();
 		
 		this.validate(opts, {
+			amount: { type: 'number', min: 0, max: 100, required: true },
 			channels: { type: 'string', match: /^r?g?b?a?$/i, required: false }
 		});
 		
@@ -338,6 +356,7 @@ class Curve {
 		}
 		
 		// create curves
+		let amount = opts.amount / 100;
 		let channels = opts.channels || 'rgb';
 		delete opts.channels;
 		
@@ -351,28 +370,44 @@ class Curve {
 				if ((highs.red > lows.red) && (idx >= lows.red) && (idx <= highs.red)) {
 					opts.red[idx] = Math.floor( ((idx - lows.red) / (highs.red - lows.red)) * 255 );
 				}
-				else opts.red[idx] = idx;
+				else {
+					if (idx > 127) opts.red[idx] = 255;
+					else opts.red[idx] = 0;
+				}
+				opts.red[idx] = Math.floor( idx + ((opts.red[idx] - idx) * amount) );
 			} // red
 			
 			if (opts.green) {
 				if ((highs.green > lows.green) && (idx >= lows.green) && (idx <= highs.green)) {
 					opts.green[idx] = Math.floor( ((idx - lows.green) / (highs.green - lows.green)) * 255 );
 				}
-				else opts.green[idx] = idx;
+				else {
+					if (idx > 127) opts.green[idx] = 255;
+					else opts.green[idx] = 0;
+				}
+				opts.green[idx] = Math.floor( idx + ((opts.green[idx] - idx) * amount) );
 			} // green
 			
 			if (opts.blue) {
 				if ((highs.blue > lows.blue) && (idx >= lows.blue) && (idx <= highs.blue)) {
 					opts.blue[idx] = Math.floor( ((idx - lows.blue) / (highs.blue - lows.blue)) * 255 );
 				}
-				else opts.blue[idx] = idx;
+				else {
+					if (idx > 127) opts.blue[idx] = 255;
+					else opts.blue[idx] = 0;
+				}
+				opts.blue[idx] = Math.floor( idx + ((opts.blue[idx] - idx) * amount) );
 			} // blue
 			
 			if (opts.alpha) {
 				if ((highs.alpha > lows.alpha) && (idx >= lows.alpha) && (idx <= highs.alpha)) {
 					opts.alpha[idx] = Math.floor( ((idx - lows.alpha) / (highs.alpha - lows.alpha)) * 255 );
 				}
-				else opts.alpha[idx] = idx;
+				else {
+					if (idx > 127) opts.alpha[idx] = 255;
+					else opts.alpha[idx] = 0;
+				}
+				opts.alpha[idx] = Math.floor( idx + ((opts.alpha[idx] - idx) * amount) );
 			} // alpha
 		}
 		
@@ -1339,7 +1374,7 @@ class CurveDemo extends BlogPlugin {
 	
 	render() {
 		// called when our component scrolls into view for the first time
-		this.elem.addClass('loading');
+		// this.elem.addClass('loading');
 		this.image = new Image();
 		this.image.onload = this.setup.bind(this);
 		this.image.src = this.data.image;
@@ -1350,7 +1385,7 @@ class CurveDemo extends BlogPlugin {
 		var self = this;
 		var image = this.image;
 		
-		this.elem.removeClass('loading');
+		// this.elem.removeClass('loading');
 		
 		var canvas = this.canvas = document.createElement('canvas');
 		canvas.width = image.width;
@@ -1401,15 +1436,17 @@ class CurveDemo extends BlogPlugin {
 				break;
 				
 				case 'posterize':
-					$filter.append('<div class="curve_component"><input type="range" min="1" max="32" step="1" value="8"></div>');
+					$filter.append('<div class="curve_component"><input type="range" min="1" max="32" step="1" value="4"></div>');
 					$filter.addClass('rgb'); // show rgb checkboxes
 				break;
 				
 				case 'solarize':
+					$filter.append('<div class="curve_component"><input type="range" min="0" max="100" step="1" value="0"></div>');
 					$filter.addClass('rgb'); // show rgb checkboxes
 				break;
 				
 				case 'invert':
+					$filter.append('<div class="curve_component"><input type="range" min="0" max="100" step="1" value="0"></div>');
 					$filter.addClass('rgb'); // show rgb checkboxes
 				break;
 				
@@ -1423,10 +1460,11 @@ class CurveDemo extends BlogPlugin {
 				break;
 				
 				case 'sepia':
-					// no options
+					$filter.append('<div class="curve_component"><input type="range" min="0" max="100" step="1" value="0"></div>');
 				break;
 				
 				case 'normalize':
+					$filter.append('<div class="curve_component"><input type="range" min="0" max="100" step="1" value="0"></div>');
 					$filter.addClass('rgb'); // show rgb checkboxes
 				break;
 				
@@ -1486,6 +1524,9 @@ class CurveDemo extends BlogPlugin {
 		
 		curve.reset();
 		
+		context.clearRect( 0, 0, canvas.width, canvas.height );
+		context.drawImage( image, 0, 0 );
+		
 		this.elem.find('.curve_filter').each( function() {
 			var $filter = $(this);
 			var fname = $filter.data('fname');
@@ -1518,12 +1559,14 @@ class CurveDemo extends BlogPlugin {
 				break;
 				
 				case 'solarize':
-					curve.solarize({ channels });
+					var value = parseInt( $filter.find('input').val() );
+					curve.solarize({ amount: value, channels });
 					$filter.find('.curve_title > span').html( 'Solarize' );
 				break;
 				
 				case 'invert':
-					curve.invert({ channels });
+					var value = parseInt( $filter.find('input').val() );
+					curve.invert({ amount: value, channels });
 					$filter.find('.curve_title > span').html( 'Invert' );
 				break;
 				
@@ -1540,13 +1583,15 @@ class CurveDemo extends BlogPlugin {
 				break;
 				
 				case 'sepia':
-					curve.desaturate().sepia();
+					var value = parseFloat( $filter.find('input').val() );
+					curve.sepia({ amount: value });
 					$filter.find('.curve_title > span').html( 'Sepia Tone' );
 				break;
 				
 				case 'normalize':
-					curve.normalize({ channels });
-					$filter.find('.curve_title > span').html( 'Normalize' );
+					var value = parseFloat( $filter.find('input').val() );
+					curve.normalize({ amount: value, channels });
+					$filter.find('.curve_title > span').html( 'Auto-Enhance' );
 				break;
 				
 				case 'threshold':
@@ -1590,8 +1635,6 @@ class CurveDemo extends BlogPlugin {
 			} // switch fname
 		}); // foreach filter
 		
-		context.clearRect( 0, 0, canvas.width, canvas.height );
-		context.drawImage( image, 0, 0 );
 		curve.render();
 	}
 	
