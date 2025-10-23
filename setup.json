@@ -27,11 +27,9 @@
 			[ "deleteFiles", "htdocs/js/_combo*" ],
 			[ "deleteFile", "htdocs/index.html" ],
 			[ "deleteFile", "htdocs/index.html.gz" ],
-			[ "symlinkFile", "htdocs/index-dev.html", "htdocs/index.html" ],
-			[ "symlinkFile", "sample_conf", "conf" ]
+			[ "symlinkFile", "htdocs/index-dev.html", "htdocs/index.html" ]
 		],
 		"dist": [
-			[ "copyDir", "sample_conf", "conf", { "exclusive": true } ],
 			{
 				"action": "bundleCompress",
 				"strip_source_maps": true,
