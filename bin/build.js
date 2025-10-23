@@ -14,7 +14,7 @@ var Tools = require('pixl-tools');
 var mkdirp = Tools.mkdirp;
 
 var BuildTools = require('./build-tools.js');
-var setup = require('../sample_conf/setup.json');
+var setup = require('../setup.json');
 var package = require('../package.json');
 
 var mode = 'dist';
