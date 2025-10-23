@@ -1,42 +1,5 @@
 {
 	"name": "PixlCore.com",
-	"pool": "default",
-	"acl": false,
-	"headers": {
-		"host": "^(www\\.|local\\.)?(pixlcore\\.com|joemax)(\\:\\d+)?$"
-	},
-	"routes": [
-		{
-			"type": "static",
-			"uri_match": "^/\\.well\\-known",
-			"path": "/opt/mendo/htdocs/.well-known"
-		},
-		{
-			"type": "proxy",
-			"uri_match": "^/(archives|bugs|canvas-plus|demos|public|screenshots|software|temp|uploads)/",
-			"target_hostname": "s3.us-west-1.amazonaws.com",
-			"target_port": 80,
-			"preserve_host": false,
-			"path_prefix": "/pixlcore.com",
-			"use_keep_alives": true,
-			"dir_index": "index.html",
-			"insert_response_headers": {
-				"Cache-Control": "public, max-age=86400"
-			}
-		},
-		{
-			"type": "script",
-			"uri_match": "^/(blog/|view/|doc/|about/|feed\\.rss|index\\.html|$)",
-			"path": "lib/api.js",
-			"max_requests_per_sec": 1000,
-			"max_concurrent_requests": 100
-		},
-		{
-			"type": "static",
-			"uri_match": "^/",
-			"path": "htdocs"
-		}
-	],
 	
 	"authors": {
 		"jhuckaby": {
@@ -57,7 +20,7 @@
 		"about": { "title": "About PixlCore", "icon": "information-outline", "org": "pixlcore", "branch": "main", "repo": "blog", "file": "about-pixlcore.md", "page": "special" },
 		
 		"cronicle": { "title": "Cronicle", "icon": "progress-clock", "org": "jhuckaby", "branch": "master", "repo": "cronicle" },
-		"xyops": { "title": "xyOps", "icon": "rocket-launch", "org": "pixlcore", "branch": "main", "repo": "blog", "file": "orchestra-coming-soon.md" },
+		"xyops": { "title": "xyOps", "icon": "rocket-launch", "org": "pixlcore", "branch": "main", "repo": "blog", "file": "xyops.md" },
 		"performa": { "title": "Performa", "icon": "chart-areaspline", "org": "jhuckaby", "branch": "master", "repo": "performa" },
 		
 		"canvas-plus": { "title": "CanvasPlus", "icon": "palette-outline", "org": "jhuckaby", "branch": "master", "repo": "canvas-plus" },
