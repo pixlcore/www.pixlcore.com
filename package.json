@@ -65,7 +65,7 @@
 		},
 		{
 			"type": "script",
-			"uri_match": "^/(blog/|view/|doc/|about/|feed\\.rss|index\\.html|$)",
+			"uri_match": "^/(blog|view/|doc/|about/|feed\\.rss|index\\.html|$)",
 			"path": "lib/api.js",
 			"max_requests_per_sec": 1000,
 			"max_concurrent_requests": 100
@@ -73,7 +73,8 @@
 		{
 			"type": "static",
 			"uri_match": "^/",
-			"path": "htdocs"
+			"path": "htdocs",
+			"ttl": 86400
 		}
 	]
 }
