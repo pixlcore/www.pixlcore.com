@@ -16,10 +16,6 @@ app.extend({
 		api: true,
 		comm: true
 	},
-	preload_images: [
-		'/images/orchestra-logomark.png',
-		'/images/orchestra-logomark-hover.png'
-	],
 	
 	colors: ["#008FFB", "#00E396", "#FEB019", "#FF4560", "#775DD0", "#3F51B5", "#4CAF50", "#546E7A", "#D4526E", "#A5978B", "#C7F464", "#81D4FA", "#2B908F", "#F9A3A4", "#90EE7E", "#FA4443", "#449DD1", "#F86624", "#69D2E7", "#EA3546", "#662E9B", "#C5D86D", "#D7263D", "#1B998B", "#2E294E", "#F46036", "#E2C044", "#662E9B", "#F86624", "#F9C80E", "#EA3546", "#43BCCD", "#5C4742", "#A5978B", "#8D5B4C", "#5A2A27", "#C4BBAF", "#A300D6", "#7D02EB", "#5653FE", "#2983FF", "#00B1F2", "#03A9F4", "#33B2DF", "#4ECDC4", "#13D8AA", "#FD6A6A", "#F9CE1D", "#FF9800"],
 	
@@ -30,12 +26,6 @@ app.extend({
 		if (config.debug) {
 			Debug.enable( this.debug_cats );
 			Debug.trace('system', "PixlCore Client Starting Up");
-		}
-		
-		// preload a few essential images
-		for (var idx = 0, len = this.preload_images.length; idx < len; idx++) {
-			var img = new Image();
-			img.src = this.preload_images[idx];
 		}
 		
 		// load prefs and populate for first time users
@@ -76,16 +66,15 @@ app.extend({
 	
 	gosub_home(args) {
 		// home page
-		app.setWindowTitle( title );
-		app.setHeaderTitle( '<i class="mdi mdi-home">&nbsp;</i>Welcome!' );
+		// app.setWindowTitle( title );
+		// app.setHeaderTitle( '<i class="mdi mdi-home">&nbsp;</i>Welcome!' );
 		
 		// blurb
-		
 		// coming soon: orchestra
-		
 		// product spotlight: cronicle
-		
 		// latest blog article
+		
+		window.location = '/blog/';
 	},
 	
 	gosub_special(args) {
@@ -341,18 +330,17 @@ app.extend({
 		if (!elem) elem = this.div;
 		else if (typeof(elem) == 'string') elem = $(elem);
 		
-		elem.find('div.markdown-body p a').each( function() {
-			var $this = $(this);
-			var href = $this.attr('href') || '';
-			if (!href.match(/\.(jpg|jpeg|gif|png)(\?|$)/i)) return; // supported images only
-			if ($this.data('expanded')) return; // do not re-expand an expanded link
-			if ($this.next().length) return; // only process links at the end of parent blocks
-			if (!$this.text().match(/^\w+\:\/\//)) return; // only process visible URL links
-			
-			$this.after('<img src="' + href + '" class="inline_image" onClick="window.open(this.src)">');
-			// $this.data('expanded', true);
-			$this.remove();
-		});
+		// elem.find('div.markdown-body p a').each( function() {
+		// 	var $this = $(this);
+		// 	var href = $this.attr('href') || '';
+		// 	if (!href.match(/\.(jpg|jpeg|gif|png)(\?|$)/i)) return; // supported images only
+		// 	if ($this.data('expanded')) return; // do not re-expand an expanded link
+		// 	if ($this.next().length) return; // only process links at the end of parent blocks
+		// 	if (!$this.text().match(/^\w+\:\/\//)) return; // only process visible URL links
+		// 	$this.after('<img src="' + href + '" class="inline_image" onClick="window.open(this.src)">');
+		// 	// $this.data('expanded', true);
+		// 	$this.remove();
+		// });
 		
 		var anchor = ('' + location.hash).replace(/\#/, '');
 		var heading = anchor ? $('#' + anchor).get(0) : null;
@@ -884,10 +872,8 @@ app.extend({
 		});
 	},
 	
-	onThemeChange: function() {
+	onThemeChange: function(theme) {
 		// called with theme changes
-		var theme = app.getPref('theme');
-		
 		// swap theme on all highlighted code sections
 		var old_class = (theme == 'light') ? "cm-s-shadowfox" : "cm-s-default";
 		var new_class = (theme == 'light') ? "cm-s-default" : "cm-s-shadowfox";
