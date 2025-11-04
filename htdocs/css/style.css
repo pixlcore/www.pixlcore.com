@@ -14,6 +14,17 @@ body.loaded div.sidebar {
 	transition: 0.2s ease left;
 }
 
+div.header {
+	position: sticky;
+	top: 0;
+	background-color: var(--background-color);
+	/* background-color: color-mix(in srgb, var(--background-color) 50%, transparent); */
+	box-shadow: 0px 0px 8px 8px var(--background-color);
+	z-index: 106;
+	background-size: 160px auto;
+	/* backdrop-filter: blur(20px); */
+}
+
 div.header, div.main {
 	margin-left: 60px;
 	margin-right: 60px;
@@ -27,6 +38,7 @@ div.header > div.header_title {
 	color: var(--header-text-color);
 }
 div.header > div.header_title > i {
+	padding-right: 5px;
 	color: var(--header-text-color);
 }
 
@@ -266,7 +278,8 @@ i.mdi.mdi-_orchestra {
 	margin-bottom: 16px;
 	font-weight: 600;
 	line-height: 1.25;
-	color: var(--label-color);
+	color: var(--theme-color);
+	clear: both;
 }
 
 .markdown-body h1 {
@@ -452,8 +465,11 @@ i.mdi.mdi-_orchestra {
 	margin-bottom: 0 !important;
 }
 
-.markdown-body p > a, .markdown-body li > a {
+.markdown-body a {
 	font-weight: 600;
+	color: var(--blue);
+}
+.markdown-body a:hover {
 	color: var(--theme-color);
 }
 
@@ -479,6 +495,23 @@ i.mdi.mdi-_orchestra {
 .inline_image {
 	max-width: 100%;
 	cursor: pointer;
+	image-orientation: from-image;
+}
+
+.img-shadow {
+	filter: drop-shadow(0px 5px 20px rgba(0,0,0,0.5));
+}
+
+.img-left {
+	max-width: 50%;
+	float: left;
+	margin: 0 2em 1em 0;
+	image-orientation: from-image;
+}
+.img-right {
+	max-width: 50%;
+	float: right;
+	margin: 0 0 1em 2em;
 	image-orientation: from-image;
 }
 
@@ -1037,6 +1070,12 @@ div.td_big {
 	
 	.dialog_box_content {
 		max-width: 500px;
+	}
+	
+	.img-left, .img-right {
+		float: none;
+		max-width: 100%;
+		margin: 0 0 1em 0;
 	}
 }
 
