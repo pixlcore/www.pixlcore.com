@@ -5,7 +5,7 @@
 	"description": "The PixlCore.com website.",
 	"author": "Joseph Huckaby <jhuckaby@pixlcore.com>",
 	"homepage": "https://github.com/pixlcore/www.pixlcore.com",
-	"license": "Private",
+	"license": "BSD-3-Clause",
 	"main": "lib/main.js",
 	"scripts": {
 		"install": "node bin/build.js dist"

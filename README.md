@@ -10,4 +10,4 @@ noodle install github:pixlcore/www.pixlcore.com#v1.0.0
 
 # License
 
-MIT
+BSD 3-Clause
