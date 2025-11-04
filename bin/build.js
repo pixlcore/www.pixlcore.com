@@ -28,6 +28,11 @@ if (setup.build[mode]) {
 // chdir to the proper server root dir
 process.chdir( path.dirname( __dirname ) );
 
+// If we were installed via the noodle CLI, we need a symlink to the "parent" node_modules
+if (!fs.existsSync('node_modules') && fs.existsSync('../node_modules')) {
+	fs.symlinkSync( '../node_modules', 'node_modules' );
+}
+
 // make sure we have a logs dir
 mkdirp.sync( 'logs' );
 fs.chmodSync( 'logs', "755" );

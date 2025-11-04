@@ -1,7 +1,7 @@
 {
 	"name": "www.pixlcore.com",
 	"private": true,
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "The PixlCore.com website.",
 	"author": "Joseph Huckaby <jhuckaby@pixlcore.com>",
 	"homepage": "https://github.com/pixlcore/www.pixlcore.com",
