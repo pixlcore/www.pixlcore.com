@@ -1,10 +1,10 @@
 {
-	"name": "pixlcore.com",
+	"name": "www.pixlcore.com",
 	"private": true,
 	"version": "1.0.0",
 	"description": "The PixlCore.com website.",
 	"author": "Joseph Huckaby <jhuckaby@pixlcore.com>",
-	"homepage": "https://github.com/pixlcore/pixlcore.com",
+	"homepage": "https://github.com/pixlcore/www.pixlcore.com",
 	"license": "Private",
 	"main": "lib/main.js",
 	"scripts": {
