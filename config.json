@@ -10,6 +10,7 @@
 	},
 	
 	"articles": [
+		"xyops",
 		"user-filters",
 		"curves",
 		"net-proc-watch"
@@ -76,9 +77,8 @@
 			"title": "Main",
 			"icon": "earth",
 			"items": [
-				{ "id": "home", "title": "Home", "icon": "home", "loc": "/" },
-				{ "id": "about", "title": "About", "icon": "information-outline", "loc": "/view/about/" },
-				{ "id": "blog", "title": "Blog", "icon": "script-text-outline", "loc": "/blog/" }
+				{ "id": "blog", "title": "Blog", "icon": "script-text-outline", "loc": "/blog/" },
+				{ "id": "about", "title": "About", "icon": "information-outline", "loc": "/view/about/" }
 			]
 		},
 		{
@@ -86,7 +86,6 @@
 			"title": "Products",
 			"icon": "book-multiple-outline",
 			"items": [
-				"xyops",
 				"cronicle",
 				"performa"
 			]
