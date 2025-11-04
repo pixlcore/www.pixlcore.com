@@ -1,5 +1,6 @@
 {
 	"name": "PixlCore.com",
+	"ttl": 86400,
 	
 	"authors": {
 		"jhuckaby": {
