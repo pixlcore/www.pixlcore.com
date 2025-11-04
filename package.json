@@ -1,7 +1,7 @@
 {
 	"name": "www.pixlcore.com",
 	"private": true,
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "The PixlCore.com website.",
 	"author": "Joseph Huckaby <jhuckaby@pixlcore.com>",
 	"homepage": "https://github.com/pixlcore/www.pixlcore.com",
@@ -60,7 +60,7 @@
 			"use_keep_alives": true,
 			"dir_index": "index.html",
 			"insert_response_headers": {
-				"Cache-Control": "public, max-age=86400"
+				"Cache-Control": "public, max-age=3600"
 			}
 		},
 		{
@@ -74,7 +74,7 @@
 			"type": "static",
 			"uri_match": "^/",
 			"path": "htdocs",
-			"ttl": 86400
+			"ttl": 3600
 		}
 	]
 }
