@@ -12,10 +12,10 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/pixlcore/pixlcore.com"
+		"url": "https://github.com/pixlcore/www.pixlcore.com"
 	},
 	"bugs": {
-		"url": "https://github.com/pixlcore/pixlcore.com/issues"
+		"url": "https://github.com/pixlcore/www.pixlcore.com/issues"
 	},
 	"keywords": [
 		"pixlcore",
