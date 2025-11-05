@@ -29,8 +29,8 @@ if (setup.build[mode]) {
 process.chdir( path.dirname( __dirname ) );
 
 // If we were installed via the noodle CLI, we need a symlink to the "parent" node_modules
-if (!fs.existsSync('node_modules') && fs.existsSync('../node_modules')) {
-	fs.symlinkSync( '../node_modules', 'node_modules' );
+if (!fs.existsSync('node_modules') && fs.existsSync('../../node_modules')) {
+	fs.symlinkSync( '../../node_modules', 'node_modules' );
 }
 
 // make sure we have a logs dir
