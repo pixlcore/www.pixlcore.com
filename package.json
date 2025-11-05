@@ -1,7 +1,7 @@
 {
 	"name": "www.pixlcore.com",
 	"private": true,
-	"version": "1.0.5",
+	"version": "1.0.6",
 	"description": "The PixlCore.com website.",
 	"author": "Joseph Huckaby <jhuckaby@pixlcore.com>",
 	"homepage": "https://github.com/pixlcore/www.pixlcore.com",
@@ -46,13 +46,8 @@
 	},
 	"routes": [
 		{
-			"type": "static",
-			"uri_match": "^/\\.well\\-known",
-			"path": "/opt/poolnoodle/htdocs/.well-known"
-		},
-		{
 			"type": "proxy",
-			"uri_match": "^/(archives|bugs|canvas-plus|demos|public|screenshots|software|temp|uploads)/",
+			"uri_match": "^/(archives|bugs|canvas-plus|demos|public|screenshots|software|temp|uploads|starrlight)/",
 			"target_hostname": "s3.us-west-1.amazonaws.com",
 			"target_port": 80,
 			"preserve_host": false,
