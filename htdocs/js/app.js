@@ -368,7 +368,7 @@ app.extend({
 		
 		elem.find('div.markdown-body pre code').each( function() {
 			if (this.innerText.match(/^\s*\{[\S\s]+\}\s*$/)) this.classList.add('language-json');
-			hljs.highlightElement(this);
+			if (this.classList.length) hljs.highlightElement(this);
 		});
 	},
 	
