@@ -1,5 +1,9 @@
 /* PixlCore.com Custom Styles */
 
+html {
+	scroll-behavior: smooth;
+}
+
 body {
 	font-family: "Avenir Next", "Helvetica Neue", Helvetica, system-ui, sans-serif;
 }
@@ -273,6 +277,7 @@ i.mdi.mdi-_orchestra {
 .markdown-body h4,
 .markdown-body h5,
 .markdown-body h6 {
+	scroll-margin-top: 75px;
 	position: relative;
 	margin-top: 40px;
 	margin-bottom: 16px;
@@ -407,6 +412,25 @@ i.mdi.mdi-_orchestra {
 
 .markdown-body pre code {
 	font-family: var(--font-family-monospace);
+}
+
+pre code.hljs {
+	padding: 0 !important;
+	background: transparent !important;
+	font-family: var(--font-family-monospace);
+	font-size: 1em;
+	line-height: 20px;
+	tab-size: 4;
+	overflow-x: hidden;
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+span.hljs-number {
+	color: #0184bb;
+}
+body.dark span.hljs-number {
+	color: #56b6c2;
 }
 
 /* .markdown-body.code h1,

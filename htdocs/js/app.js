@@ -367,19 +367,8 @@ app.extend({
 		else if (typeof(elem) == 'string') elem = $(elem);
 		
 		elem.find('div.markdown-body pre code').each( function() {
-			var $this = $(this);
-			
-			var lang = ($this.attr('class') || '').replace(/language-/, '');
-			if (!lang) return; // plain text
-			
-			var info = CodeMirror.findModeByExtension( lang ) || CodeMirror.findModeByName( lang );
-			if (!info) return; // unsupported language
-			
-			var code = '' + this.innerText;
-			var $pre = $this.parent();
-			$pre.empty().addClass( (app.getPref('theme') == 'light') ? "cm-s-default" : "cm-s-shadowfox" );
-			
-			CodeMirror.runMode(code, info.mime, $pre.get(0));
+			if (this.innerText.match(/^\s*\{[\S\s]+\}\s*$/)) this.classList.add('language-json');
+			hljs.highlightElement(this);
 		});
 	},
 	
@@ -873,11 +862,14 @@ app.extend({
 	},
 	
 	onThemeChange: function(theme) {
-		// called with theme changes
-		// swap theme on all highlighted code sections
-		var old_class = (theme == 'light') ? "cm-s-shadowfox" : "cm-s-default";
-		var new_class = (theme == 'light') ? "cm-s-default" : "cm-s-shadowfox";
-		if (this.div) this.div.find('.markdown-body pre.' + old_class).removeClass(old_class).addClass(new_class);
+		// update highlight.js css
+		var $head = $('head');
+		$head.find('link[hljs]').remove();
+		
+		switch (theme) {
+			case 'light': $head.append('<link rel="stylesheet" href="/css/atom-one-light.css" hljs>'); break;
+			case 'dark': $head.append('<link rel="stylesheet" href="/css/atom-one-dark.css" hljs>'); break;
+		}
 	},
 	
 	initSidebarTabs: function() {
