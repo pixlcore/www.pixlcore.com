@@ -1,7 +1,7 @@
 {
 	"name": "www.pixlcore.com",
 	"private": true,
-	"version": "1.0.8",
+	"version": "1.0.9",
 	"description": "The PixlCore.com website.",
 	"author": "Joseph Huckaby <jhuckaby@pixlcore.com>",
 	"homepage": "https://github.com/pixlcore/www.pixlcore.com",
@@ -22,6 +22,7 @@
 		"webapp"
 	],
 	"dependencies": {
+		"@highlightjs/cdn-assets": "11.10.0",
 		"@mdi/font": "7.4.47",
 		"@mdi/svg": "7.4.47",
 		"async": "2.6.4",
@@ -29,7 +30,6 @@
 		"jquery": "3.6.0",
 		"marked": "4.3.0",
 		"mime": "2.5.2",
-		"codemirror": "5.58.3",
 		"pixl-cache": "^1.0.6",
 		"pixl-cli": "^1.0.11",
 		"pixl-request": "^2.0.3",
@@ -62,8 +62,9 @@
 			"type": "script",
 			"uri_match": "^/(blog|view/|doc/|about/|feed\\.rss|index\\.html|$)",
 			"path": "lib/api.js",
-			"max_requests_per_sec": 1000,
-			"max_concurrent_requests": 100
+			"max_requests_per_sec": 200,
+			"max_concurrent_requests": 16,
+			"rate_limit_headers": true
 		},
 		{
 			"type": "static",
