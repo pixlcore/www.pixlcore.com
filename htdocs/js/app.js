@@ -915,6 +915,7 @@ app.extend({
 		// get combined date/time options with user locale settings
 		var ropts = Intl.DateTimeFormat().resolvedOptions();
 		var [lang, reg] = ropts.locale.split(/\-/);
+		if (!reg) reg = lang.toUpperCase();
 		
 		if (!opts.locale) opts.locale = lang + '-' + reg;
 		if (!opts.timeZone) opts.timeZone = ropts.timeZone;
