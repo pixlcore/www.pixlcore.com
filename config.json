@@ -11,6 +11,8 @@
 	},
 	
 	"articles": [
+		"dev-update-2026-02",
+		"dev-update-2026-01",
 		"dev-update-2025-12",
 		"xyops",
 		"user-filters",
@@ -23,7 +25,7 @@
 		"about": { "title": "About PixlCore", "icon": "information-outline", "org": "pixlcore", "branch": "main", "repo": "blog", "file": "about-pixlcore.md", "page": "special" },
 		
 		"cronicle": { "title": "Cronicle", "icon": "progress-clock", "org": "jhuckaby", "branch": "master", "repo": "cronicle" },
-		"xyops": { "title": "xyOps", "icon": "rocket-launch", "org": "pixlcore", "branch": "main", "repo": "blog", "file": "xyops.md" },
+		"xyops": { "title": "xyOps™", "icon": "rocket-launch", "org": "pixlcore", "branch": "main", "repo": "blog", "file": "xyops.md" },
 		"performa": { "title": "Performa", "icon": "chart-areaspline", "org": "jhuckaby", "branch": "master", "repo": "performa" },
 		
 		"canvas-plus": { "title": "CanvasPlus", "icon": "palette-outline", "org": "jhuckaby", "branch": "master", "repo": "canvas-plus" },
@@ -88,6 +90,7 @@
 			"title": "Products",
 			"icon": "book-multiple-outline",
 			"items": [
+				"xyops",
 				"cronicle",
 				"performa"
 			]
