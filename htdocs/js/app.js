@@ -304,7 +304,7 @@ app.extend({
 		// click on github link
 		var meta = config.meta;
 		var url = 'https://github.com/' + meta.org + '/' + meta.repo;
-		window.open( url );
+		window.open( meta.link || url );
 	},
 	
 	findSidebarGroup(slug) {
