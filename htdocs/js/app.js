@@ -475,7 +475,7 @@ app.extend({
 				var hash = RegExp.$5;
 				
 				repo = repo.toLowerCase();
-				if (config.pages[repo]) {
+				if (config.pages[repo] && !config.pages[repo].link) {
 					if (path === 'README.md') $this.attr('href', '/view/' + repo + hash);
 					else $this.attr('href', '/doc/' + repo + '/' + path + hash);
 				}
